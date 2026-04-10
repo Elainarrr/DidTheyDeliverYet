@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get('redirectTo') ?? '/';
@@ -34,37 +34,45 @@ export default function LoginPage() {
   }
 
   return (
+    <div className="flex flex-col items-center gap-4 w-full max-w-xs">
+      <p className="text-gray-500 text-sm">
+        Sign in to manage your site.
+      </p>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        className="w-full border border-gray-200 rounded px-4 py-2 text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-400"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
+        placeholder="Password"
+        className="w-full border border-gray-200 rounded px-4 py-2 text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-400"
+      />
+      {error && (
+        <p className="text-red-400 text-sm">{error}</p>
+      )}
+      <button
+        onClick={handleLogin}
+        disabled={loading}
+        className="w-full bg-gray-900 text-white rounded px-4 py-2 text-sm hover:bg-gray-700 disabled:opacity-50"
+      >
+        {loading ? 'Signing in...' : 'Sign in'}
+      </button>
+    </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
     <main className="min-h-screen flex items-center justify-center bg-white">
-      <div className="flex flex-col items-center gap-4 w-full max-w-xs">
-        <p className="text-gray-500 text-sm">
-          Sign in to manage your site.
-        </p>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          className="w-full border border-gray-200 rounded px-4 py-2 text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-400"
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
-          placeholder="Password"
-          className="w-full border border-gray-200 rounded px-4 py-2 text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-400"
-        />
-        {error && (
-          <p className="text-red-400 text-sm">{error}</p>
-        )}
-        <button
-          onClick={handleLogin}
-          disabled={loading}
-          className="w-full bg-gray-900 text-white rounded px-4 py-2 text-sm hover:bg-gray-700 disabled:opacity-50"
-        >
-          {loading ? 'Signing in...' : 'Sign in'}
-        </button>
-      </div>
+      <Suspense fallback={<p className="text-sm text-gray-400">Loading...</p>}>
+        <LoginForm />
+      </Suspense>
     </main>
   );
 }
