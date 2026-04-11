@@ -1,36 +1,142 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Did They Deliver Yet?
 
-## Getting Started
+### A status page for pregnant people.
 
-First, run the development server:
+**Live at [didtheydeliveryet.com](https://didtheydeliveryet.com)**
+
+---
+
+## The Origin Story
+
+When Elaina was pregnant with her first child, the texts started rolling in as her due date approached. Distant cousins. Old coworkers. People she hadn't heard from in years. All asking the same thing: *Has the baby come yet?*
+
+"If I had the baby, they'd hear about it," she grumbled.
+
+A coworker offered a suggestion: "It's too bad you don't have a status page. Like AWS."
+
+Elaina brought the idea home to Ian. He got inspired. They built the first version on Glitch (RIP) in the final days of her pregnancy — Elaina on the back end, Ian on the front — and pointed everyone who asked to the URL instead. It was a fun distraction, a practical solution, and a pretty good idea born out of mild third-trimester grumpiness.
+
+Years later, they rebuilt it properly. This is that version.
+
+---
+
+## What It Does
+
+- A public page at `didtheydeliveryet.com/yourname` that says **"No."** until you're ready for it to say **"Yes!"**
+- Confetti on delivery, obviously
+- A password-protected updates feed for close friends and family who want more details
+- An admin panel where you and your partner can post updates with photos, text, and status colors
+- Three statuses: **Pending**, **Delivered**, and **Closed** — because life doesn't always go to plan, and this tool is designed with that in mind
+
+---
+
+## Hosted Version
+
+Don't want to deal with any of this? We'll set it all up for you.
+
+**$15, one time, yours to keep.**
+
+You get your own page at `didtheydeliveryet.com/yourname`, a private updates feed, two admin accounts, and photo uploads. We handle everything else.
+
+👉 [Get your page](mailto:hello@didtheydeliveryet.com?subject=I%20want%20a%20page!)
+
+---
+
+## DIY Version
+
+Want to run your own? Here's everything you need.
+
+### Tech Stack
+
+- [Next.js](https://nextjs.org/) — React framework with SSR
+- [Supabase](https://supabase.com/) — Postgres database, auth, and file storage
+- [Vercel](https://vercel.com/) — Hosting and deployment
+- [Tailwind CSS](https://tailwindcss.com/) — Styling
+- [canvas-confetti](https://www.npmjs.com/package/canvas-confetti) — The important part
+
+### Prerequisites
+
+- Node.js 18+
+- A [Supabase](https://supabase.com/) account (free tier works fine)
+- A [Vercel](https://vercel.com/) account (free tier works fine)
+
+### Setup
+
+**1. Clone the repo**
+
+```bash
+git clone https://github.com/elainarrr/didtheydeliveryet.git
+cd didtheydeliveryet
+npm install
+```
+
+**2. Create a Supabase project**
+
+Go to [supabase.com](https://supabase.com), create a new project, and grab your Project URL and anon key from **Project Settings → API**.
+
+**3. Set up environment variables**
+
+Create a `.env.local` file in the project root:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your_project_url_here
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
+```
+
+**4. Run the database migration**
+
+In the Supabase SQL editor, run the contents of:
+
+```
+supabase/migrations/001_initial_schema.sql
+```
+
+**5. Run the dev server**
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Provisioning a Site
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+For now, sites are provisioned manually. In the Supabase SQL editor:
 
-## Learn More
+```sql
+-- Create the site
+insert into sites (slug, operator_label, status)
+values ('yourslug', 'Your Internal Label', 'pending');
 
-To learn more about Next.js, take a look at the following resources:
+-- Create a Supabase Auth user via the dashboard, then link them
+insert into site_members (site_id, user_id, role)
+values (
+  (select id from sites where slug = 'yourslug'),
+  'the-auth-user-uuid',
+  'admin'
+);
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The site owner can then log in at `/yourslug/admin` to set their updates password, post updates, and invite a second admin.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Deployment
 
-## Deploy on Vercel
+Push to GitHub and import the repo into [Vercel](https://vercel.com). Add your two environment variables in the Vercel project settings. Vercel auto-detects Next.js — no build configuration needed.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Contributing
+
+Pull requests are welcome. If you're adding a feature, open an issue first so we can talk it through.
+
+---
+
+## Authors
+
+Built with love (and mild sleep deprivation) by [Elaina](https://github.com/elainarrr) and [Ian](https://github.com/iann), with the help of [Claude](https://claude.ai) by Anthropic.
+
+---
+
+## License
+
+MIT. Go build something.
