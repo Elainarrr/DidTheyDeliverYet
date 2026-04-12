@@ -1,4 +1,5 @@
 import { DM_Sans } from 'next/font/google';
+import Link from 'next/link';
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -233,12 +234,12 @@ export default function LandingPage() {
       <footer className="bg-black px-6 py-12 text-center text-sm text-gray-400">
         <p>Made with love (and mild sleep deprivation) by people who've been there.</p>
         <p className="mt-2">
-          
-          <a href="mailto:hello@didtheydeliveryet.com"
+          <Link
+            href="/contact"
             className="text-yellow hover:opacity-70 transition-opacity"
           >
-            hello@didtheydeliveryet.com
-          </a>
+            Get in touch
+          </Link>
         </p>
       </footer>
 

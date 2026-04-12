@@ -59,6 +59,8 @@ Want to run your own? Here's everything you need.
 - Node.js 18+
 - A [Supabase](https://supabase.com/) account (free tier works fine)
 - A [Vercel](https://vercel.com/) account (free tier works fine)
+- [Resend](https://resend.com/) account (free tier works fine)
+- [Supabase CLI](https://supabase.com/docs/guides/cli) (`brew install supabase/tap/supabase` on Mac)
 
 ### Setup
 
@@ -91,7 +93,27 @@ In the Supabase SQL editor, run the contents of:
 supabase/migrations/001_initial_schema.sql
 ```
 
-**5. Run the dev server**
+**5. Set up Resend for contact form emails**
+
+Create a free account at [resend.com](https://resend.com) and verify your domain. Then grab your API key and add it to your Supabase project:
+
+1. Go to your Supabase dashboard → **Edge Functions → Manage secrets**
+2. Add a secret named `RESEND_API_KEY` with your Resend API key as the value
+
+Then update `supabase/functions/contact-form/index.ts` with your own addresses:
+
+```typescript
+const TO_EMAIL = 'you@yourdomain.com';     // where you want to receive contact form emails
+const FROM_EMAIL = 'contact@yourdomain.com'; // must be on your verified Resend domain
+```
+
+Then deploy the Edge Function:
+
+```bash
+supabase functions deploy contact-form --no-verify-jwt
+```
+
+**6. Run the dev server**
 
 ```bash
 npm run dev
