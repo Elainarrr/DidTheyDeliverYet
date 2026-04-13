@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Footer from '@/components/Footer';
 import Link from 'next/link';
 
 export default function ContactPage() {
@@ -58,56 +59,76 @@ const res = await fetch(
             ← Back to home
           </Link>
         </div>
+        <Footer/>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-yellow flex items-center justify-center px-6">
-      <div className="bg-white rounded-2xl p-8 w-full max-w-md flex flex-col gap-5 border border-gray-100">
-        <div className="flex flex-col gap-1">
-          <h1 className="text-2xl font-medium">Get in touch</h1>
-          <p className="text-sm text-gray-400">
-            Questions, custom requests, or just want to say hi — we'd love to hear from you.
+    <main className="min-h-screen bg-yellow flex flex-col">
+      <header className="bg-yellow px-6 py-5 flex items-center justify-between">
+        <div className="flex-1">
+          <Link
+            href="/"
+            className="text-base font-bold text-coral hover:opacity-70 transition-opacity"
+            style={{ letterSpacing: '0.15em' }}
+          >
+            DTDY
+          </Link>
+        </div>
+        <div className="flex-1 flex justify-center">
+          <p
+            className="text-3xl font-medium text-black opacity-70"
+            style={{ fontFamily: 'var(--font-dm-sans)', letterSpacing: '-0.02em' }}
+          >
+            Get in touch 💌
           </p>
         </div>
+        <div className="flex-1" />
+      </header>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Name</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Your name"
-            className="border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-300"
-          />
-        </div>
+      <div className="flex-1 flex items-center justify-center px-6 py-12 pb-20">
+        <div className="bg-white rounded-2xl p-8 w-full max-w-md flex flex-col gap-5 border border-gray-100">
+          <p className="text-sm text-gray-600">
+            Questions, custom requests, or just want to say hi — we'd love to hear from you.
+          </p>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="your@email.com"
-            className="border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-300"
-          />
-        </div>
+          <div className="flex flex-col gap-1">
+            <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Your name"
+              className="border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-300"
+            />
+          </div>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Message</label>
-          <textarea
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="What's on your mind?"
-            rows={4}
-            className="border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-300 resize-none"
-          />
-        </div>
+          <div className="flex flex-col gap-1">
+            <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="your@email.com"
+              className="border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-300"
+            />
+          </div>
 
-        {error && (
-          <p className="text-coral text-sm">{error}</p>
-        )}
+          <div className="flex flex-col gap-1">
+            <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Message</label>
+            <textarea
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="What's on your mind?"
+              rows={4}
+              className="border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-300 resize-none"
+            />
+          </div>
+
+          {error && (
+            <p className="text-coral text-sm">{error}</p>
+          )}
 
         {/* Honeypot - hidden from real users */}
         <input
@@ -120,21 +141,23 @@ const res = await fetch(
           aria-hidden="true"
         />
 
-        <button
-          onClick={handleSubmit}
-          disabled={loading}
-          className="w-full bg-coral text-white rounded-full px-6 py-3 text-sm font-medium hover:opacity-80 transition-opacity disabled:opacity-50"
-        >
-          {loading ? 'Sending...' : 'Send message'}
-        </button>
+          <button
+            onClick={handleSubmit}
+            disabled={loading}
+            className="w-full bg-coral text-white rounded-full px-6 py-3 text-sm font-medium hover:opacity-80 transition-opacity disabled:opacity-50"
+          >
+            {loading ? 'Sending...' : 'Send message'}
+          </button>
 
-        <Link
-          href="/"
-          className="text-center text-sm text-gray-400 hover:opacity-70 transition-opacity"
-        >
-          ← Back to home
-        </Link>
+          <Link
+            href="/"
+            className="text-center text-sm text-gray-400 hover:opacity-70 transition-opacity"
+          >
+            ← Back to home
+          </Link>
+        </div>
       </div>
+      <Footer />
     </main>
   );
 }

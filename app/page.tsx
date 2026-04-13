@@ -1,4 +1,5 @@
 import { DM_Sans } from 'next/font/google';
+import Footer from '@/components/Footer';
 import Link from 'next/link';
 
 const dmSans = DM_Sans({
@@ -13,7 +14,7 @@ export default function LandingPage() {
 
       {/* Hero */}
       <section className="bg-yellow px-6 pt-16 pb-16 text-center">
-        <p className="text-sm font-medium tracking-widest uppercase mb-4 text-black opacity-50">
+        <p className="text-sm font-medium tracking-widest uppercase mb-4 text-coral">
           Did They Deliver Yet?
         </p>
         <h1 className="text-4xl sm:text-5xl font-medium leading-tight mb-4 text-black">
@@ -90,7 +91,7 @@ export default function LandingPage() {
                 emoji: '🤰',
                 bg: 'bg-yellow',
                 title: 'You get a page',
-                description: 'We set up your personal page at didtheydeliveryet.com/yourname and an admin panel where you and your partner can manage everything.',
+                description: 'We set up your personal page at didtheydeliveryet.com/yourname and an admin panel where you and your support people can manage everything.',
               },
               {
                 emoji: '📱',
@@ -230,18 +231,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-black px-6 py-12 text-center text-sm text-gray-400">
-        <p>Made with love (and mild sleep deprivation) by people who've been there.</p>
-        <p className="mt-2">
-          <Link
-            href="/contact"
-            className="text-yellow hover:opacity-70 transition-opacity"
-          >
-            Get in touch
-          </Link>
-        </p>
-      </footer>
+      <Footer />
 
     </main>
   );

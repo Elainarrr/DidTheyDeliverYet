@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { Site, SiteStatus } from '@/lib/types';
 import { createHash } from 'crypto';
+import Link from 'next/link';
 
 type Props = {
   site: Site;
@@ -38,15 +39,9 @@ export default function AdminPanel({ site }: Props) {
   async function handleStatusSave() {
     setStatusSaving(true);
     setStatusMessage('');
-
     const updates: Record<string, string> = { status };
     if (status === 'closed') updates.closed_message = closedMessage;
-
-    const { error } = await supabase
-      .from('sites')
-      .update(updates)
-      .eq('id', site.id);
-
+    const { error } = await supabase.from('sites').update(updates).eq('id', site.id);
     setStatusMessage(error ? 'Error saving status.' : 'Status updated!');
     setStatusSaving(false);
   }
@@ -55,14 +50,8 @@ export default function AdminPanel({ site }: Props) {
     if (!newPassword) return;
     setPasswordSaving(true);
     setPasswordMessage('');
-
     const hash = createHash('sha256').update(newPassword).digest('hex');
-
-    const { error } = await supabase
-      .from('sites')
-      .update({ updates_password_hash: hash })
-      .eq('id', site.id);
-
+    const { error } = await supabase.from('sites').update({ updates_password_hash: hash }).eq('id', site.id);
     setPasswordMessage(error ? 'Error saving password.' : 'Password updated!');
     setNewPassword('');
     setPasswordSaving(false);
@@ -71,7 +60,6 @@ export default function AdminPanel({ site }: Props) {
   async function handleUpdatePost() {
     setUpdateSaving(true);
     setUpdateMessage('');
-
     let photo_url = null;
 
     if (updatePhoto) {
@@ -79,17 +67,12 @@ export default function AdminPanel({ site }: Props) {
       const { error: uploadError } = await supabase.storage
         .from('update-photos')
         .upload(filename, updatePhoto);
-
       if (uploadError) {
         setUpdateMessage('Error uploading photo.');
         setUpdateSaving(false);
         return;
       }
-
-      const { data: urlData } = supabase.storage
-        .from('update-photos')
-        .getPublicUrl(filename);
-
+      const { data: urlData } = supabase.storage.from('update-photos').getPublicUrl(filename);
       photo_url = urlData.publicUrl;
     }
 
@@ -111,13 +94,11 @@ export default function AdminPanel({ site }: Props) {
     if (!inviteEmail) return;
     setInviteSaving(true);
     setInviteMessage('');
-
     const res = await fetch('/api/invite', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ siteId: site.id, email: inviteEmail }),
     });
-
     setInviteMessage(
       res.ok
         ? 'Invite sent! They can now log in and manage this site.'
@@ -128,19 +109,48 @@ export default function AdminPanel({ site }: Props) {
   }
 
   return (
-    <main className="min-h-screen bg-white py-12 px-4">
-      <div className="max-w-lg mx-auto flex flex-col gap-10">
-        <h1 className="text-2xl font-light text-gray-900">Admin Panel</h1>
+    <main className="min-h-screen bg-white">
+
+      {/* Header */}
+      <header className="bg-yellow px-6 py-5 flex items-center justify-between">
+        <div className="flex-1">
+          <Link
+            href="/"
+            className="text-base font-bold text-coral hover:opacity-70 transition-opacity"
+            style={{ letterSpacing: '0.15em' }}
+          >
+            DTDY
+          </Link>
+        </div>
+        <div className="flex-1 flex justify-center">
+          <p
+            className="text-3xl font-medium text-black opacity-70"
+            style={{ fontFamily: 'var(--font-dm-sans)', letterSpacing: '-0.02em' }}
+          >
+            Admin panel 📝
+          </p>
+        </div>
+        <div className="flex-1 flex justify-end">
+          <Link
+            href={`/${site.slug}`}
+            className="text-xs font-semibold tracking-widest uppercase text-black opacity-50 hover:opacity-70 transition-opacity"
+          >
+            View site →
+          </Link>
+        </div>
+      </header>
+
+      <div className="max-w-lg mx-auto py-10 px-4 flex flex-col gap-10">
 
         {/* Status */}
-        <section className="flex flex-col gap-3">
-          <h2 className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-            Site Status
+        <section className="flex flex-col gap-3 items-start">
+          <h2 className="text-xs font-semibold tracking-widest uppercase text-black opacity-50">
+            Site status
           </h2>
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value as SiteStatus)}
-            className="border border-gray-200 rounded px-4 py-2 text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-400"
+            className="w-1/2 border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-300"
           >
             <option value="pending">Pending</option>
             <option value="delivered">Delivered</option>
@@ -152,56 +162,32 @@ export default function AdminPanel({ site }: Props) {
               value={closedMessage}
               onChange={(e) => setClosedMessage(e.target.value)}
               placeholder="Optional closing message..."
-              className="border border-gray-200 rounded px-4 py-2 text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-400"
+              className="w-full border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-300"
             />
           )}
           <button
             onClick={handleStatusSave}
             disabled={statusSaving}
-            className="bg-gray-900 text-white rounded px-4 py-2 text-sm hover:bg-gray-700 disabled:opacity-50"
+            className="bg-lavender text-white rounded-full px-6 py-2 text-sm font-medium hover:opacity-80 transition-opacity disabled:opacity-50"
           >
-            {statusSaving ? 'Saving...' : 'Save Status'}
+            {statusSaving ? 'Saving...' : 'Save status'}
           </button>
-          {statusMessage && (
-            <p className="text-sm text-gray-400">{statusMessage}</p>
-          )}
+          {statusMessage && <p className="text-sm text-gray-400">{statusMessage}</p>}
         </section>
 
-        {/* Password */}
-        <section className="flex flex-col gap-3">
-          <h2 className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-            Updates Password
-          </h2>
-          <input
-            type="password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            placeholder="Set a new password..."
-            className="border border-gray-200 rounded px-4 py-2 text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-400"
-          />
-          <button
-            onClick={handlePasswordSave}
-            disabled={passwordSaving}
-            className="bg-gray-900 text-white rounded px-4 py-2 text-sm hover:bg-gray-700 disabled:opacity-50"
-          >
-            {passwordSaving ? 'Saving...' : 'Save Password'}
-          </button>
-          {passwordMessage && (
-            <p className="text-sm text-gray-400">{passwordMessage}</p>
-          )}
-        </section>
+        <hr className="border-gray-200" />
 
         {/* Post Update */}
-        <section className="flex flex-col gap-3">
-          <h2 className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-            Post an Update
+        <section className="flex flex-col gap-3 items-start">
+          <h2 className="text-xs font-semibold tracking-widest uppercase text-black opacity-50">
+            Post an update
           </h2>
           <textarea
             value={updateText}
             onChange={(e) => setUpdateText(e.target.value)}
             placeholder="What's happening?"
             rows={3}
-            className="border border-gray-200 rounded px-4 py-2 text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-400 resize-none"
+            className="w-full border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-300 resize-none"
           />
           <div className="flex items-center gap-3">
             <label className="text-sm text-gray-500">Status color</label>
@@ -221,19 +207,46 @@ export default function AdminPanel({ site }: Props) {
           <button
             onClick={handleUpdatePost}
             disabled={updateSaving}
-            className="bg-gray-900 text-white rounded px-4 py-2 text-sm hover:bg-gray-700 disabled:opacity-50"
+            className="bg-lavender text-white rounded-full px-4 py-2 text-sm font-medium hover:opacity-80 transition-opacity disabled:opacity-50"
           >
-            {updateSaving ? 'Posting...' : 'Post Update'}
+            {updateSaving ? 'Posting...' : 'Post update'}
           </button>
-          {updateMessage && (
-            <p className="text-sm text-gray-400">{updateMessage}</p>
-          )}
+          {updateMessage && <p className="text-sm text-gray-400">{updateMessage}</p>}
         </section>
 
+        <hr className="border-gray-200" />
+
+        {/* Password */}
+        <section className="flex flex-col gap-3 items-start">
+          <h2 className="text-xs font-semibold tracking-widest uppercase text-black opacity-50">
+            VIP updates password
+          </h2>
+          <p className="text-sm text-gray-400">
+            Set or change the password for your VIP Updates feed.
+          </p>
+          <input
+            type="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            placeholder="Set a new password..."
+            className="w-full border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-300"
+          />
+          <button
+            onClick={handlePasswordSave}
+            disabled={passwordSaving}
+            className="bg-lavender text-white rounded-full px-4 py-2 text-sm font-medium hover:opacity-80 transition-opacity disabled:opacity-50"
+          >
+            {passwordSaving ? 'Saving...' : 'Save password'}
+          </button>
+          {passwordMessage && <p className="text-sm text-gray-400">{passwordMessage}</p>}
+        </section>
+
+        <hr className="border-gray-200" />
+
         {/* Invite */}
-        <section className="flex flex-col gap-3">
-          <h2 className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-            Invite a Co-Admin
+        <section className="flex flex-col gap-3 items-start pb-10">
+          <h2 className="text-xs font-semibold tracking-widest uppercase text-black opacity-50">
+            Invite a co-admin
           </h2>
           <p className="text-sm text-gray-400">
             They must already have an account. Enter their email to give them admin access.
@@ -242,20 +255,19 @@ export default function AdminPanel({ site }: Props) {
             type="email"
             value={inviteEmail}
             onChange={(e) => setInviteEmail(e.target.value)}
-            placeholder="partner@email.com"
-            className="border border-gray-200 rounded px-4 py-2 text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-400"
+            placeholder="teammate@email.com"
+            className="w-full border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-300"
           />
           <button
             onClick={handleInvite}
             disabled={inviteSaving}
-            className="bg-gray-900 text-white rounded px-4 py-2 text-sm hover:bg-gray-700 disabled:opacity-50"
+            className="bg-lavender text-white rounded-full px-4 py-2 text-sm font-medium hover:opacity-80 transition-opacity disabled:opacity-50"
           >
-            {inviteSaving ? 'Inviting...' : 'Send Invite'}
+            {inviteSaving ? 'Inviting...' : 'Send invite'}
           </button>
-          {inviteMessage && (
-            <p className="text-sm text-gray-400">{inviteMessage}</p>
-          )}
+          {inviteMessage && <p className="text-sm text-gray-400">{inviteMessage}</p>}
         </section>
+
       </div>
     </main>
   );
