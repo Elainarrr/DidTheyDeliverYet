@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 import Link from 'next/link';
 
 export default function ContactPage() {
@@ -66,26 +67,7 @@ const res = await fetch(
 
   return (
     <main className="min-h-screen bg-yellow flex flex-col">
-      <header className="bg-yellow px-6 py-5 flex items-center justify-between">
-        <div className="flex-1">
-          <Link
-            href="/"
-            className="text-base font-bold text-coral hover:opacity-70 transition-opacity"
-            style={{ letterSpacing: '0.15em' }}
-          >
-            DTDY
-          </Link>
-        </div>
-        <div className="flex-1 flex justify-center">
-          <p
-            className="text-3xl font-medium text-black opacity-70"
-            style={{ fontFamily: 'var(--font-dm-sans)', letterSpacing: '-0.02em' }}
-          >
-            Get in touch 💌
-          </p>
-        </div>
-        <div className="flex-1" />
-      </header>
+      <Header title="Get in touch 💌" />
 
       <div className="flex-1 flex items-center justify-center px-6 py-12 pb-20">
         <div className="bg-white rounded-2xl p-8 w-full max-w-md flex flex-col gap-5 border border-gray-100">

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { Site, SiteStatus } from '@/lib/types';
 import { createHash } from 'crypto';
+import Header from '@/components/Header';
 import Link from 'next/link';
 
 type Props = {
@@ -111,34 +112,7 @@ export default function AdminPanel({ site }: Props) {
   return (
     <main className="min-h-screen bg-white">
 
-      {/* Header */}
-      <header className="bg-yellow px-6 py-5 flex items-center justify-between">
-        <div className="flex-1">
-          <Link
-            href="/"
-            className="text-base font-bold text-coral hover:opacity-70 transition-opacity"
-            style={{ letterSpacing: '0.15em' }}
-          >
-            DTDY
-          </Link>
-        </div>
-        <div className="flex-1 flex justify-center">
-          <p
-            className="text-3xl font-medium text-black opacity-70"
-            style={{ fontFamily: 'var(--font-dm-sans)', letterSpacing: '-0.02em' }}
-          >
-            Admin panel 📝
-          </p>
-        </div>
-        <div className="flex-1 flex justify-end">
-          <Link
-            href={`/${site.slug}`}
-            className="text-xs font-semibold tracking-widest uppercase text-black opacity-50 hover:opacity-70 transition-opacity"
-          >
-            View site →
-          </Link>
-        </div>
-      </header>
+      <Header title="Admin 📝" backHref={`/${site.slug}`} backLabel="View site →" />
 
       <div className="max-w-lg mx-auto py-10 px-4 flex flex-col gap-10">
 

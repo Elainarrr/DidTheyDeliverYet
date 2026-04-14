@@ -1,7 +1,8 @@
 'use client';
 import { useState } from 'react';
-import Link from 'next/link';
 import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+import Link from 'next/link';
 
 export default function TourPage() {
   const [loadingCheckout, setLoadingCheckout] = useState(false);
@@ -24,33 +25,7 @@ export default function TourPage() {
     <main className="min-h-screen bg-white">
 
       {/* Header */}
-      <header className="bg-yellow px-6 py-5 flex items-center justify-between">
-        <div className="flex-1">
-          <Link
-            href="/"
-            className="text-base font-bold text-coral hover:opacity-70 transition-opacity"
-            style={{ letterSpacing: '0.15em' }}
-          >
-            DTDY
-          </Link>
-        </div>
-        <div className="flex-1 flex justify-center">
-          <p
-            className="text-2xl font-medium text-black opacity-70"
-            style={{ fontFamily: 'var(--font-dm-sans)', letterSpacing: '-0.02em' }}
-          >
-            How it works
-          </p>
-        </div>
-        <div className="flex-1 flex justify-end">
-          <Link
-            href="/"
-            className="text-xs font-semibold tracking-widest uppercase text-black opacity-40 hover:opacity-70 transition-opacity"
-          >
-            ← Home
-          </Link>
-        </div>
-      </header>
+      <Header title="How it works" backHref="/" backLabel="← Home" />
 
       {/* Step 1 — white */}
       <section className="bg-white px-6 py-20">
@@ -283,7 +258,7 @@ export default function TourPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-black px-6 py-20 text-center">
+      <section className="bg-black px-6 py-20 text-center ">
         <p className="text-xs font-semibold tracking-widest uppercase text-coral mb-4">
           Ready?
         </p>
@@ -294,7 +269,7 @@ export default function TourPage() {
           Get your own page.
         </h2>
         <p className="text-gray-400 text-sm mb-8">One time. $15. We handle everything.</p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
           <button
             onClick={handleCheckout}
             disabled={loadingCheckout}

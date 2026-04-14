@@ -30,7 +30,7 @@ export default function LandingPage() {
     <main className={`${dmSans.variable} min-h-screen bg-white text-foreground`}>
 
       {/* Hero */}
-      <section className="bg-yellow px-6 pt-16 pb-16 text-center">
+      <section className="bg-yellow px-6 pt-16 pb-14 text-center">
         <p className="text-sm font-medium tracking-widest uppercase mb-4 text-coral">
           Did They Deliver Yet?
         </p>
@@ -41,7 +41,7 @@ export default function LandingPage() {
           Stop answering the same text 47 times. Set up a page. Let people check it themselves.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center ">
           
           <button
             onClick={handleCheckout}
@@ -59,12 +59,6 @@ export default function LandingPage() {
             DIY on GitHub
           </a>
 
-          <Link
-            href="/tour"
-            className="rounded-full px-8 py-3 text-sm font-medium border-2 border-black text-black opacity-40 hover:opacity-70 transition-opacity"
-          >
-            See how it works →
-          </Link>
         </div>
       </section>
 
