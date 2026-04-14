@@ -41,7 +41,7 @@ export default function LandingPage() {
           Stop answering the same text 47 times. Set up a page. Let people check it themselves.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
           
           <button
             onClick={handleCheckout}
@@ -58,45 +58,156 @@ export default function LandingPage() {
           >
             DIY on GitHub
           </a>
+
+          <Link
+            href="/tour"
+            className="rounded-full px-8 py-3 text-sm font-medium border-2 border-black text-black opacity-40 hover:opacity-70 transition-opacity"
+          >
+            See how it works →
+          </Link>
         </div>
+      </section>
 
-        {/* Phone mockups */}
-        <div className="flex gap-4 justify-center">
-          <div
-            className="bg-white rounded-2xl border border-gray-100 flex flex-col items-center justify-center gap-2 py-4 px-4"
-            style={{ width: '120px', height: '160px' }}
-          >
-            <div className="flex gap-1 mb-1">
-              {['#FF8F8F', '#FFF1CB', '#C2E2FA', '#B7A3E3'].map((c) => (
-                <span key={c} className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: c }} />
-              ))}
-            </div>
-            <p
-              className="text-4xl font-light"
-              style={{ fontFamily: 'var(--font-dm-sans)', letterSpacing: '-0.02em', color: '#1a1a1a' }}
+      {/* Phone mockups */}
+      <section className="bg-white px-6 py-14">
+        <div className="max-w-2xl mx-auto flex flex-col items-center gap-10">
+          <div className="flex gap-6 justify-center">
+            {/* No phone */}
+            <div
+              className="bg-yellow rounded-2xl flex flex-col items-center justify-center gap-2 py-10 px-8"
+              style={{ width: '150px', height: '220px', border: '2px solid #1a1a1a' }}
             >
-              No.
+              <p
+                className="text-5xl font-light text-black"
+                style={{ fontFamily: 'var(--font-dm-sans)', letterSpacing: '-0.02em' }}
+              >
+                No.
+              </p>
+              <p className="text-xs text-gray-400 mt-2 whitespace-nowrap">Before delivery</p>
+            </div>
+
+            {/* Yes phone */}
+            <div
+              className="bg-yellow rounded-2xl flex flex-col items-center justify-center gap-1 py-10 px-8"
+              style={{ width: '150px', height: '220px', border: '2px solid #1a1a1a' }}
+            >
+              <div className="flex gap-1 mb-1">
+                {[
+                  { bg: '#FF8F8F', round: true },
+                  { bg: '#C2E2FA', round: false },
+                  { bg: '#B7A3E3', round: true },
+                  { bg: '#FF8F8F', round: false },
+                  { bg: '#C2E2FA', round: true },
+                  { bg: '#B7A3E3', round: false },
+                ].map((c, i) => (
+                  <span
+                    key={i}
+                    className="inline-block"
+                    style={{
+                      width: '6px',
+                      height: '6px',
+                      background: c.bg,
+                      borderRadius: c.round ? '50%' : '1px',
+                      transform: `rotate(${i % 2 === 0 ? '10' : '-10'}deg)`,
+                    }}
+                  />
+                ))}
+              </div>
+              <p
+                className="text-5xl font-light text-lavender"
+                style={{ fontFamily: 'var(--font-dm-sans)', letterSpacing: '-0.02em' }}
+              >
+                Yes!
+              </p>
+              <div className="flex gap-1 mt-1">
+                {[
+                  { bg: '#B7A3E3', round: false },
+                  { bg: '#FF8F8F', round: true },
+                  { bg: '#C2E2FA', round: false },
+                  { bg: '#B7A3E3', round: true },
+                ].map((c, i) => (
+                  <span
+                    key={i}
+                    className="inline-block"
+                    style={{
+                      width: '6px',
+                      height: '6px',
+                      background: c.bg,
+                      borderRadius: c.round ? '50%' : '1px',
+                      transform: `rotate(${i % 2 === 0 ? '-10' : '15'}deg)`,
+                    }}
+                  />
+                ))}
+              </div>
+              <p className="text-xs text-gray-400 mt-2 whitespace-nowrap">After delivery</p>
+            </div>
+          </div>
+          <div className="text-center">
+            <h2 className="text-4xl font-medium mb-4">
+              One link, one quick answer.
+            </h2>
+            <p className="text-gray-500 leading-relaxed max-w-md mx-auto">
+              Your very own page that answers "No." until you're ready to switch it to "Yes!"
             </p>
-            <p className="text-xs mt-1 text-gray-400">Before delivery</p>
+          </div>
+          <p className="text-gray-500 leading-relaxed text-center max-w-md text-sm">
+            Plus, you get a password-protected feed of more detailed updates you can share with your closest friends and family.
+          </p>
+        </div>
+      </section>
+      
+
+      {/* The problem */}
+      <section className="bg-yellow px-6 py-14">
+        <div className="max-w-2xl mx-auto flex flex-col items-center gap-8">
+          <div className="text-center">
+            <p className="text-xs font-semibold tracking-widest uppercase text-coral opacity-70 mb-4">
+              Sound familiar?
+            </p>
+            <h2 className="text-4xl font-medium mb-4">
+              Your phone won't stop.
+            </h2>
+            <p className="text-gray-600 leading-relaxed max-w-md mx-auto">
+              As your due date approaches, the texts roll in. Every. Single. Day.
+            </p>
           </div>
 
+          {/* Phone container */}
           <div
-            className="bg-white rounded-2xl border border-gray-100 flex flex-col items-center justify-center gap-2 py-4 px-4"
-            style={{ width: '120px', height: '160px' }}
+            className="bg-white rounded-3xl px-6 py-8 w-full max-w-sm flex flex-col gap-3"
+            style={{ border: '0.5px solid #e8d9a0' }}
           >
-            <div className="flex gap-1 mb-1">
-              {['#FF8F8F', '#FFF1CB', '#C2E2FA', '#B7A3E3'].map((c) => (
-                <span key={c} className="w-1.5 h-1.5 rounded-full inline-block" style={{ background: c }} />
-              ))}
-            </div>
-            <p
-              className="text-4xl font-light text-lavender"
-              style={{ fontFamily: 'var(--font-dm-sans)', letterSpacing: '-0.02em' }}
-            >
-              Yes!
-            </p>
-            <p className="text-xs mt-1 text-gray-400">After delivery</p>
+            {[
+              { text: '"Has the baby come yet??"', align: 'left' },
+              { text: '"Any news?? Thinking of you!"', align: 'left' },
+              { text: '"Just checking in... is it time??"', align: 'left' },
+              { text: '"Still no baby. I\'ll let you know." 😅', align: 'right', coral: true },
+            ].map((bubble) => (
+              <div
+                key={bubble.text}
+                className={`flex ${bubble.align === 'right' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div
+                  className="px-4 py-3 text-sm leading-relaxed max-w-xs text-gray-700"
+                  style={{
+                    background: bubble.coral ? '#FF8F8F33' : '#f0f0f0',
+                    borderRadius: bubble.align === 'right'
+                      ? '18px 18px 4px 18px'
+                      : '18px 18px 18px 4px',
+                  }}
+                >
+                  {bubble.text}
+                </div>
+              </div>
+            ))}
           </div>
+
+          <Link
+            href="/tour"
+            className="text-sm font-medium text-coral hover:opacity-70 transition-opacity"
+          >
+            See how it works →
+          </Link>
         </div>
       </section>
 
