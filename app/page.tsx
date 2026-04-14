@@ -75,7 +75,7 @@ export default function LandingPage() {
             {/* No phone */}
             <div
               className="bg-yellow rounded-2xl flex flex-col items-center justify-center gap-2 py-10 px-8"
-              style={{ width: '150px', height: '220px', border: '2px solid #1a1a1a' }}
+              style={{ width: '150px', height: '220px', border: '2px solid #6B7280' }}
             >
               <p
                 className="text-5xl font-light text-black"
@@ -89,7 +89,7 @@ export default function LandingPage() {
             {/* Yes phone */}
             <div
               className="bg-yellow rounded-2xl flex flex-col items-center justify-center gap-1 py-10 px-8"
-              style={{ width: '150px', height: '220px', border: '2px solid #1a1a1a' }}
+              style={{ width: '150px', height: '220px', border: '2px solid #6B7280' }}
             >
               <div className="flex gap-1 mb-1">
                 {[
