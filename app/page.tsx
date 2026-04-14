@@ -1,3 +1,5 @@
+'use client';
+import { useState } from 'react';
 import { DM_Sans } from 'next/font/google';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
@@ -9,6 +11,21 @@ const dmSans = DM_Sans({
 });
 
 export default function LandingPage() {
+  const [loadingCheckout, setLoadingCheckout] = useState(false);
+
+  async function handleCheckout() {
+    setLoadingCheckout(true);
+    const res = await fetch('/api/create-checkout-session', {
+      method: 'POST',
+    });
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      console.error('No checkout URL returned');
+      setLoadingCheckout(false);
+    }
+  }
   return (
     <main className={`${dmSans.variable} min-h-screen bg-white text-foreground`}>
 
@@ -26,11 +43,13 @@ export default function LandingPage() {
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
           
-          <a href="mailto:hello@didtheydeliveryet.com?subject=I want a page!"
-            className="rounded-full px-8 py-3 text-sm font-medium bg-coral text-white hover:opacity-80 transition-opacity"
+          <button
+            onClick={handleCheckout}
+            disabled={loadingCheckout}
+            className="rounded-full px-8 py-3 text-sm font-medium bg-coral text-white hover:opacity-80 transition-opacity disabled:opacity-50"
           >
-            Get your page — $15
-          </a>
+            {loadingCheckout ? 'Loading...' : 'Get your page — $15'}
+          </button>
           
           <a href="https://github.com/elainarrr/didtheydeliveryet"
             target="_blank"
@@ -188,11 +207,13 @@ export default function LandingPage() {
               </ul>
               <div className="mt-auto">
                 
-                <a href="mailto:hello@didtheydeliveryet.com?subject=I want a page!"
-                  className="block w-full bg-coral text-white rounded-full px-6 py-3 text-sm font-medium text-center hover:opacity-80 transition-opacity"
-                >
-                  Get your page
-                </a>
+              <button
+                onClick={handleCheckout}
+                disabled={loadingCheckout}
+                className="mt-4 w-full bg-coral text-white rounded-full px-6 py-3 text-sm font-medium text-center hover:opacity-80 transition-opacity disabled:opacity-50"
+              >
+                {loadingCheckout ? 'Loading...' : 'Get your page'}
+              </button>
               </div>
             </div>
 
