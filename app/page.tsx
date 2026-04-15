@@ -329,15 +329,26 @@ export default function LandingPage() {
               <p className="text-sm text-gray-400 mb-6">if you're into that sort of thing</p>
               <ul className="text-sm flex flex-col gap-2 text-left text-gray-600 mb-8">
                 {[
-                  'Full source code on GitHub',
-                  'Deploy on your own infrastructure',
-                  'Bring your own domain',
-                  'Complete setup guide included',
-                  "Tip jar if you're feeling generous",
+                  { label: 'Full source code on GitHub' },
+                  { label: 'Deploy on your own infrastructure' },
+                  { label: 'Bring your own domain' },
+                  { label: 'Complete setup guide included' },
+                  { label: "Tip jar if you're feeling generous", href: 'https://ko-fi.com/elainarrr' },
                 ].map((item) => (
-                  <li key={item} className="flex items-start gap-2">
+                  <li key={item.label} className="flex items-start gap-2">
                     <span className="text-lavender mt-0.5">✓</span>
-                    {item}
+                    {item.href ? (
+                      
+                      <a  href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-lavender hover:opacity-70 transition-opacity"
+                      >
+                        {item.label}
+                      </a>
+                    ) : (
+                      item.label
+                    )}
                   </li>
                 ))}
               </ul>

@@ -22,10 +22,11 @@ Years later, they rebuilt it properly. This is that version.
 
 ## What It Does
 
-- A public page at `didtheydeliveryet.com/yourname` that says **"No."** until you're ready for it to say **"Yes!"**
+- A public page at your own domain that says **"No."** until you're ready for it to say **"Yes!"**
 - Confetti on delivery, obviously
-- A password-protected updates feed for close friends and family who want more details
-- An admin panel where you and your partner can post updates with photos, text, and status colors
+- A password-protected VIP updates feed for close friends and family who want more details
+- An admin panel where you and your co-admins can post updates with photos, text, and status colors
+- Multiple admin accounts — invite a partner, a doula, anyone you trust
 - Three statuses: **Pending**, **Delivered**, and **Closed** — because life doesn't always go to plan, and this tool is designed with that in mind
 
 ---
@@ -36,15 +37,13 @@ Don't want to deal with any of this? We'll set it all up for you.
 
 **$15, one time, yours to keep.**
 
-You get your own page at `didtheydeliveryet.com/yourname`, a private updates feed, two admin accounts, and photo uploads. We handle everything else.
-
-👉 [Get your page](mailto:hello@didtheydeliveryet.com?subject=I%20want%20a%20page!)
+👉 [Get your page](https://didtheydeliveryet.com)
 
 ---
 
 ## DIY Version
 
-Want to run your own? Here's everything you need.
+Want to run your own? Here's everything you need to get a personal status page up and running at your own domain.
 
 ### Tech Stack
 
@@ -52,6 +51,7 @@ Want to run your own? Here's everything you need.
 - [Supabase](https://supabase.com/) — Postgres database, auth, and file storage
 - [Vercel](https://vercel.com/) — Hosting and deployment
 - [Tailwind CSS](https://tailwindcss.com/) — Styling
+- [DM Sans](https://fonts.google.com/specimen/DM+Sans) — Typography
 - [canvas-confetti](https://www.npmjs.com/package/canvas-confetti) — The important part
 
 ### Prerequisites
@@ -59,7 +59,6 @@ Want to run your own? Here's everything you need.
 - Node.js 18+
 - A [Supabase](https://supabase.com/) account (free tier works fine)
 - A [Vercel](https://vercel.com/) account (free tier works fine)
-- [Resend](https://resend.com/) account (free tier works fine)
 - [Supabase CLI](https://supabase.com/docs/guides/cli) (`brew install supabase/tap/supabase` on Mac)
 
 ### Setup
@@ -93,27 +92,7 @@ In the Supabase SQL editor, run the contents of:
 supabase/migrations/001_initial_schema.sql
 ```
 
-**5. Set up Resend for contact form emails**
-
-Create a free account at [resend.com](https://resend.com) and verify your domain. Then grab your API key and add it to your Supabase project:
-
-1. Go to your Supabase dashboard → **Edge Functions → Manage secrets**
-2. Add a secret named `RESEND_API_KEY` with your Resend API key as the value
-
-Then update `supabase/functions/contact-form/index.ts` with your own addresses:
-
-```typescript
-const TO_EMAIL = 'you@yourdomain.com';     // where you want to receive contact form emails
-const FROM_EMAIL = 'contact@yourdomain.com'; // must be on your verified Resend domain
-```
-
-Then deploy the Edge Function:
-
-```bash
-supabase functions deploy contact-form --no-verify-jwt
-```
-
-**6. Run the dev server**
+**5. Run the dev server**
 
 ```bash
 npm run dev
@@ -121,14 +100,14 @@ npm run dev
 
 Visit `http://localhost:3000`.
 
-### Provisioning a Site
+### Setting up your site
 
-For now, sites are provisioned manually. In the Supabase SQL editor:
+In the Supabase SQL editor, create your site and link your admin account:
 
 ```sql
 -- Create the site
 insert into sites (slug, operator_label, status)
-values ('yourslug', 'Your Internal Label', 'pending');
+values ('yourslug', 'Your Label', 'pending');
 
 -- Create a Supabase Auth user via the dashboard, then link them
 insert into site_members (site_id, user_id, role)
@@ -139,17 +118,35 @@ values (
 );
 ```
 
-The site owner can then log in at `/yourslug/admin` to set their updates password, post updates, and invite a second admin.
+Then log in at `/yourslug/admin` to set your VIP updates password, post updates, and invite additional admins.
 
 ### Deployment
 
 Push to GitHub and import the repo into [Vercel](https://vercel.com). Add your two environment variables in the Vercel project settings. Vercel auto-detects Next.js — no build configuration needed.
+
+Make sure to exclude the Supabase functions folder from the TypeScript build by adding this to `tsconfig.json`:
+
+```json
+{
+  "exclude": ["node_modules", "supabase/functions"]
+}
+```
+
+Point your domain at Vercel and you're live.
 
 ---
 
 ## Contributing
 
 Pull requests are welcome. If you're adding a feature, open an issue first so we can talk it through.
+
+---
+
+## Support
+
+If this project saved you from answering 47 texts, consider buying us a coffee!
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/elainarrr)
 
 ---
 
