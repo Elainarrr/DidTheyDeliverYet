@@ -11,14 +11,20 @@ export default function Footer() {
         DTDY
       </Link>
       <p className="mt-3">Made with love (and mild sleep deprivation) by people who've been there.</p>
-      <p className="mt-2">
+      <div className="flex gap-6 justify-center mt-3">
         <Link
           href="/contact"
           className="text-yellow hover:opacity-70 transition-opacity"
         >
           Get in touch
         </Link>
-      </p>
+        <Link
+          href="/demo"
+          className="text-lavender hover:opacity-70 transition-opacity"
+        >
+          Try a demo
+        </Link>
+      </div>
     </footer>
   );
 }
