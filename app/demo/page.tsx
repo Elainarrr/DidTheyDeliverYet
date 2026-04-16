@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import confetti from 'canvas-confetti';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -33,7 +34,15 @@ export default function DemoPage() {
           Before delivery
         </button>
         <button
-          onClick={() => setTab('delivered')}
+          onClick={() => {
+            setTab('delivered');
+        confetti({
+              particleCount: 200,
+              spread: 90,
+              origin: { y: 0.5 },
+              colors: ['#B7A3E3', '#F9A8C9', '#60A5FA', '#FFF1CB', '#FF8F8F'],
+            });
+        }}
           className="rounded-full px-6 py-2 text-sm font-medium transition-all"
           style={{
             background: tab === 'delivered' ? '#1a1a1a' : 'transparent',
@@ -82,6 +91,11 @@ export default function DemoPage() {
           See the admin panel →
         </Link>
       </div>
+
+      {/* Closed status note */}
+      <p className="text-center text-xs text-gray-400 pb-12 px-6 max-w-sm mx-auto leading-relaxed">
+        Pages also support a Closed status with a custom message — for when life doesn't go to plan.
+      </p>
 
       <Footer />
     </main>
