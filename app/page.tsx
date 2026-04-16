@@ -255,22 +255,22 @@ export default function LandingPage() {
                 description: 'Share a password with close family and friends for a more detailed, photo-friendly update feed.',
               },
               {
+                emoji: '🎨',
+                bg: 'bg-coral',
+                title: 'Choose how you share',
+                description: 'Make your public "Yes!" page Lavender, Pink, or Blue. Customize your VIP feed with colors and photos.',
+              },
+              {
                 emoji: '👥',
                 bg: 'bg-yellow',
                 title: 'Multiple admins',
                 description: 'Add additional admins so someone else can post updates while you focus on the important stuff.',
               },
               {
-                emoji: '🎨',
-                bg: 'bg-coral',
-                title: 'Status colors',
-                description: 'Color-code your updates to set the tone — calm green, excited yellow, or anything in between.',
-              },
-              {
-                emoji: '🌅',
+                emoji: '🤍',
                 bg: 'bg-lavender',
-                title: 'Three outcomes',
-                description: 'Pending, Delivered, or Closed. Because life is complicated, and we designed for all of it.',
+                title: 'Here to support',
+                description: 'Your page has three statuses — Yes!, No., and Closed (with a custom message). Because life doesn\'t always go to plan.',
               },
             ].map((feature) => (
               <div key={feature.title} className="bg-white rounded-2xl p-6 flex flex-col gap-2 border border-gray-100">

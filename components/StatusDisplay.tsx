@@ -17,6 +17,7 @@ export default function StatusDisplay({ site }: Props) {
         spread: 90,
         origin: { y: 0.5 },
         colors: [
+          site.yes_color_hex,
           getComputedStyle(document.documentElement).getPropertyValue('--color-coral').trim(),
           getComputedStyle(document.documentElement).getPropertyValue('--color-yellow').trim(),
           getComputedStyle(document.documentElement).getPropertyValue('--color-blue').trim(),
@@ -24,7 +25,7 @@ export default function StatusDisplay({ site }: Props) {
         ],
       });
     }
-  }, [site.status]);
+  }, [site.status, site.yes_color_hex]);
 
   if (site.status === 'pending') {
     return (
@@ -50,7 +51,10 @@ export default function StatusDisplay({ site }: Props) {
       <main className="min-h-screen flex flex-col items-center justify-center bg-yellow">
         <p
           className="text-8xl font-light text-lavender"
-          style={{ fontFamily: 'var(--font-dm-sans)', letterSpacing: '-0.02em' }}
+          style={{ 
+            fontFamily: 'var(--font-dm-sans)', 
+            letterSpacing: '-0.02em', 
+            color: site.yes_color_hex, }}
         >
           Yes!
         </p>

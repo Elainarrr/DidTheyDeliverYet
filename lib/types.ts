@@ -8,6 +8,7 @@ export type Site = {
   public_message: string | null;
   closed_message: string | null;
   updates_password_hash: string | null;
+  yes_color_hex: string;
   created_at: string;
 };
 

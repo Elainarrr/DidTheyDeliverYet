@@ -28,6 +28,7 @@ Years later, they rebuilt it properly. This is that version.
 - An admin panel where you and your co-admins can post updates with photos, text, and status colors
 - Multiple admin accounts — invite a partner, a doula, anyone you trust
 - Three statuses: **Pending**, **Delivered**, and **Closed** — because life doesn't always go to plan, and this tool is designed with that in mind
+- Choose a color for your "Yes!" — lavender, pink, or blue 
 
 ---
 

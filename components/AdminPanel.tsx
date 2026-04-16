@@ -12,6 +12,7 @@ type Props = {
 };
 
 export default function AdminPanel({ site }: Props) {
+  const [yesColor, setYesColor] = useState(site.yes_color_hex ?? '#B7A3E3');
   const supabase = createClient();
 
   // Status
@@ -19,6 +20,11 @@ export default function AdminPanel({ site }: Props) {
   const [closedMessage, setClosedMessage] = useState(site.closed_message ?? '');
   const [statusSaving, setStatusSaving] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
+  const yesColorOptions = [
+    { label: 'Lavender', value: '#B7A3E3' },
+    { label: 'Pink', value: '#F9A8C9' },
+    { label: 'Blue', value: '#60A5FA' },
+  ];
 
   // Password
   const [newPassword, setNewPassword] = useState('');
@@ -42,6 +48,7 @@ export default function AdminPanel({ site }: Props) {
     setStatusMessage('');
     const updates: Record<string, string> = { status };
     if (status === 'closed') updates.closed_message = closedMessage;
+    if (status === 'delivered') updates.yes_color_hex = yesColor;
     const { error } = await supabase.from('sites').update(updates).eq('id', site.id);
     setStatusMessage(error ? 'Error saving status.' : 'Status updated!');
     setStatusSaving(false);
@@ -138,6 +145,38 @@ export default function AdminPanel({ site }: Props) {
               placeholder="Optional closing message..."
               className="w-full border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-300"
             />
+          )}
+          {status === 'delivered' && (
+            <div className="flex flex-col gap-2">
+              <p className="text-xs text-gray-400">Color for "Yes!"</p>
+              <div className="flex gap-3">
+                {yesColorOptions.map((color) => (
+                  <label
+                    key={color.value}
+                    className="flex flex-col items-center gap-1 cursor-pointer"
+                  >
+                    <div
+                      className="w-8 h-8 rounded-full transition-all"
+                      style={{
+                        background: color.value,
+                        boxShadow: yesColor === color.value
+                          ? `0 0 0 2px white, 0 0 0 4px ${color.value}`
+                          : 'none',
+                      }}
+                    />
+                    <input
+                      type="radio"
+                      name="yesColor"
+                      value={color.value}
+                      checked={yesColor === color.value}
+                      onChange={() => setYesColor(color.value)}
+                      className="sr-only"
+                    />
+                    <span className="text-xs text-gray-400">{color.label}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
           )}
           <button
             onClick={handleStatusSave}

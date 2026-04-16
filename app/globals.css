@@ -7,6 +7,7 @@
   --color-yellow: #FFF1CB;
   --color-blue: #C2E2FA;
   --color-lavender: #B7A3E3;
+  --color-pink: #F9A8C9;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -10,6 +10,7 @@ create table sites (
   public_message text,
   closed_message text,                    -- optional, shown when status is 'closed'
   updates_password_hash text,
+  yes_color_hex text not null default '#B7A3E3',
   created_at timestamptz default now()
 );
 
