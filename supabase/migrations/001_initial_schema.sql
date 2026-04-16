@@ -28,7 +28,7 @@ create table updates (
   site_id uuid references sites(id) on delete cascade,
   text text,
   photo_url text,
-  status_color text default '#4ade80',
+  status_color_hex text default '#FFF9C4',
   created_at timestamptz default now()
 );
 

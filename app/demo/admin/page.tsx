@@ -49,7 +49,7 @@ export default function DemoAdminPage() {
           />
           <div className="flex items-center gap-3">
             <label className="text-sm text-gray-400">Status color</label>
-            <div className="w-8 h-6 rounded" style={{ background: '#4ade80', opacity: 0.4 }} />
+            <div className="w-8 h-6 rounded" style={{ background: '#FFF9C4', opacity: 0.4 }} />
           </div>
           <button
             disabled

@@ -24,6 +24,10 @@ export default function Footer() {
         >
           Try a demo
         </Link>
+        <Link href="/privacy" 
+        className="text-gray-500 hover:opacity-70 transition-opacity">
+          Privacy
+        </Link>
       </div>
     </footer>
   );

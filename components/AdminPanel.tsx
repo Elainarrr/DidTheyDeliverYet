@@ -33,8 +33,9 @@ export default function AdminPanel({ site }: Props) {
 
   // New update
   const [updateText, setUpdateText] = useState('');
-  const [updateColor, setUpdateColor] = useState('#4ade80');
+  const [updateColor, setUpdateColor] = useState('#FFF9C4');
   const [updatePhoto, setUpdatePhoto] = useState<File | null>(null);
+  const [previewPhotoUrl, setPreviewPhotoUrl] = useState<string | null>(null);
   const [updateSaving, setUpdateSaving] = useState(false);
   const [updateMessage, setUpdateMessage] = useState('');
 
@@ -88,13 +89,14 @@ export default function AdminPanel({ site }: Props) {
       site_id: site.id,
       text: updateText || null,
       photo_url,
-      status_color: updateColor,
+      status_color_hex: updateColor,
     });
 
     setUpdateMessage(error ? 'Error posting update.' : 'Update posted!');
     setUpdateText('');
     setUpdatePhoto(null);
-    setUpdateColor('#4ade80');
+    setPreviewPhotoUrl(null);
+    setUpdateColor('#FFF9C4');
     setUpdateSaving(false);
   }
 
@@ -114,6 +116,16 @@ export default function AdminPanel({ site }: Props) {
     );
     setInviteEmail('');
     setInviteSaving(false);
+  }
+
+  function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0] ?? null;
+    setUpdatePhoto(file);
+    if (file) {
+      setPreviewPhotoUrl(URL.createObjectURL(file));
+    } else {
+      setPreviewPhotoUrl(null);
+    }
   }
 
   return (
@@ -195,6 +207,26 @@ export default function AdminPanel({ site }: Props) {
           <h2 className="text-xs font-semibold tracking-widest uppercase text-black opacity-50">
             Post an update
           </h2>
+          {/* Live preview */}
+          <div
+            className="w-full rounded-xl p-4 flex flex-col gap-4 transition-colors"
+            style={{ background: updateColor }}
+          >
+            {previewPhotoUrl && (
+              <img
+                src={previewPhotoUrl}
+                alt="Preview"
+                className="w-full rounded-lg overflow-hidden"
+                style={{ maxHeight: '400px', objectFit: 'contain' }}
+              />
+            )}
+            <p className="text-sm text-gray-800 leading-relaxed">
+              {updateText || <span className="text-gray-400 italic">Your update will appear here...</span>}
+            </p>
+            <p className="text-xs text-gray-400">Just now</p>
+          </div>
+
+          {/* Text input */}
           <textarea
             value={updateText}
             onChange={(e) => setUpdateText(e.target.value)}
@@ -202,25 +234,67 @@ export default function AdminPanel({ site }: Props) {
             rows={3}
             className="w-full border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-300 resize-none"
           />
-          <div className="flex items-center gap-3">
-            <label className="text-sm text-gray-500">Status color</label>
-            <input
-              type="color"
-              value={updateColor}
-              onChange={(e) => setUpdateColor(e.target.value)}
-              className="h-8 w-12 rounded cursor-pointer border border-gray-200"
-            />
+          
+          {/* Color swatches */}
+          <div className="flex flex-col gap-2">
+            <p className="text-xs text-gray-400">Tile color</p>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { label: 'Butter', value: '#FFF9C4' },
+                { label: 'Blush', value: '#FCE4EC' },
+                { label: 'Peach', value: '#FFF3E0' },
+                { label: 'Tangerine', value: '#FFE0B2' },
+                { label: 'Mint', value: '#E8F5E9' },
+                { label: 'Sky', value: '#E3F2FD' },
+                { label: 'Lavender', value: '#F3E5F5' },
+                { label: 'Aqua', value: '#E0F7FA' },
+              ].map((color) => (
+                <button
+                  key={color.value}
+                  onClick={() => setUpdateColor(color.value)}
+                  title={color.label}
+                  className="w-8 h-8 rounded-full transition-all"
+                  style={{
+                    background: color.value,
+                    boxShadow: updateColor === color.value
+                      ? `0 0 0 2px white, 0 0 0 4px #1a1a1a`
+                      : `0 0 0 1px #e0e0e0`,
+                  }}
+                />
+              ))}
+            </div>
           </div>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setUpdatePhoto(e.target.files?.[0] ?? null)}
-            className="text-sm text-gray-500"
-          />
+
+          {/* Photo upload */}
+          <div className="flex flex-col gap-2">
+            <p className="text-xs text-gray-400">Photo</p>
+            <label className="cursor-pointer">
+              <div
+                className="rounded-full px-4 py-2 text-sm font-medium border-2 border-gray-200 text-gray-500 hover:opacity-70 transition-opacity inline-block"
+              >
+                {updatePhoto ? `📷 ${updatePhoto.name}` : '📷 Choose a photo'}
+              </div>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handlePhotoChange}
+                className="sr-only"
+              />
+            </label>
+            {previewPhotoUrl && (
+              <button
+                onClick={() => { setUpdatePhoto(null); setPreviewPhotoUrl(null); }}
+                className="text-xs text-coral hover:opacity-70 transition-opacity text-left"
+              >
+                Remove photo
+              </button>
+            )}
+          </div>
+
           <button
             onClick={handleUpdatePost}
             disabled={updateSaving}
-            className="bg-lavender text-white rounded-full px-4 py-2 text-sm font-medium hover:opacity-80 transition-opacity disabled:opacity-50"
+            className="bg-lavender text-white rounded-full px-6 py-2 text-sm font-medium hover:opacity-80 transition-opacity disabled:opacity-50"
           >
             {updateSaving ? 'Posting...' : 'Post update'}
           </button>

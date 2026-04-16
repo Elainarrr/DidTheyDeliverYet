@@ -157,6 +157,12 @@ Built with love (and mild sleep deprivation) by [Elaina](https://github.com/elai
 
 ---
 
+## Acknowledgements
+
+Color palette sourced from [ColorHunt](https://colorhunt.co/palette/ff8f8ffff1cbc2e2fab7a3e3).
+
+---
+
 ## License
 
 MIT. Go build something.

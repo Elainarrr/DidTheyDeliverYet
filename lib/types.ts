@@ -23,6 +23,6 @@ export type Update = {
   site_id: string;
   text: string | null;
   photo_url: string | null;
-  status_color: string;
+  status_color_hex: string;
   created_at: string;
 };
