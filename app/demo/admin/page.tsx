@@ -6,8 +6,8 @@ export default function DemoAdminPage() {
     <main className="min-h-screen bg-white flex flex-col">
       <Header title="Admin 📝" backHref="/demo" backLabel="← Demo" />
 
-      <div className="bg-yellow px-6 py-3 text-center">
-        <p className="text-xs font-medium text-gray-600">
+      <div className="bg-sky px-6 py-3 text-center">
+        <p className="text-xs font-medium text-blue-700">
           This is a read-only demo — buttons are disabled
         </p>
       </div>

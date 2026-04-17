@@ -122,6 +122,19 @@ export default function UpdatesFeed({ site, updates: initialUpdates, isAdmin }: 
     }
   }
 
+  async function handleEdit(id: string, newText: string) {
+    const { error } = await supabase
+      .from('updates')
+      .update({ text: newText })
+      .eq('id', id);
+
+    if (!error) {
+      setUpdates(updates.map((u) =>
+        u.id === id ? { ...u, text: newText } : u
+      ));
+    }
+  }
+
   if (!unlocked) {
     return (
       <main className="min-h-screen flex items-center justify-center bg-yellow px-6">
@@ -283,6 +296,7 @@ export default function UpdatesFeed({ site, updates: initialUpdates, isAdmin }: 
               update={update}
               isAdmin={isAdmin}
               onDelete={handleDelete}
+              onEdit={handleEdit}
             />
           ))
         )}

@@ -200,7 +200,7 @@ export default function LandingPage() {
             href="/tour"
             className="text-sm font-medium text-coral hover:opacity-70 transition-opacity"
           >
-            See how it works →
+            Learn more →
           </Link>
         </div>
       </section>
