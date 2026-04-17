@@ -10,13 +10,6 @@
   --color-pink: #F9A8C9;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 @theme {
   --color-background: #ffffff;
   --color-foreground: #1a1a1a;
