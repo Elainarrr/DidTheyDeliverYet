@@ -195,13 +195,13 @@ export default function TourPage() {
         <div className="max-w-4xl mx-auto grid sm:grid-cols-2 gap-12 items-center">
           <div>
             <p className="text-xs font-semibold tracking-widest uppercase text-coral opacity-70 mb-4">
-              Step 3 — admin panel
+              Step 3 — admin features
             </p>
             <h2 className="text-4xl font-medium mb-4">
               You're in control.
             </h2>
             <p className="text-gray-500 leading-relaxed mb-6">
-              Manage everything from a simple admin panel. You and your partner both get access — post updates from the delivery room, or hand it off to someone you trust.
+              Manage your admin settings and updates feed. All account admins get access — post updates from the delivery room to a select few, and change your status page to "Yes!" when the time is right.
             </p>
             {[
               'Flip your status from Pending to Delivered with one tap.',
@@ -236,23 +236,36 @@ export default function TourPage() {
                 </button>
               </div>
             </div>
-            <div className="bg-white rounded-2xl p-5" style={{ border: '0.5px solid #e0e0e0' }}>
-              <p className="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-3">Post an update</p>
-              <textarea
-                className="w-full bg-gray-50 rounded-lg px-3 py-2 text-sm text-gray-400 resize-none"
-                style={{ border: '0.5px solid #e0e0e0', height: '60px' }}
-                placeholder="What's happening?"
-                readOnly
-              />
-              <div className="mt-2">
-                <button
-                  className="text-white rounded-full px-4 py-1.5 text-xs font-medium"
-                  style={{ background: '#B7A3E3' }}
-                >
-                  Post update
-                </button>
+            {/* Updates feed with post form mockup */}
+          <div className="flex flex-col gap-3">
+            <div className="bg-white rounded-2xl p-4 flex flex-col gap-3" style={{ border: '0.5px solid #e0e0e0' }}>
+              <p className="text-xs font-semibold tracking-widest uppercase text-gray-400">Post an update</p>
+              <div className="w-full rounded-xl p-3 flex flex-col gap-2" style={{ background: '#FFF9C4' }}>
+                <p className="text-xs text-gray-400 italic">Your update will appear here...</p>
               </div>
+              <textarea
+                disabled
+                placeholder="What's happening?"
+                rows={2}
+                className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-400 resize-none cursor-not-allowed"
+              />
+              <div className="flex gap-1.5">
+                {['#FFF9C4', '#FCE4EC', '#FFF3E0', '#FFE0B2', '#E8F5E9', '#E3F2FD', '#F3E5F5', '#E0F7FA'].map((color) => (
+                  <div
+                    key={color}
+                    className="w-5 h-5 rounded-full"
+                    style={{ background: color, boxShadow: color === '#FFF9C4' ? '0 0 0 1.5px white, 0 0 0 2.5px #1a1a1a' : '0 0 0 1px #e0e0e0' }}
+                  />
+                ))}
+              </div>
+              <div className="rounded-full px-3 py-1 text-xs font-medium border-2 border-gray-200 text-gray-300 inline-block cursor-not-allowed opacity-60 self-start">
+                📷 Choose a photo
+              </div>
+              <button disabled className="bg-lavender text-white rounded-full px-4 py-1.5 text-xs font-medium opacity-60 cursor-not-allowed self-start">
+                Post update
+              </button>
             </div>
+          </div>
           </div>
         </div>
       </section>
@@ -286,6 +299,12 @@ export default function TourPage() {
             DIY on GitHub
           </a>
         </div>
+        <Link
+          href="/demo"
+          className="inline-block mt-6 text-sm text-gray-400 hover:text-gray-300 transition-colors"
+        >
+          Want a closer look? → View the demo
+        </Link>
       </section>
 
       <Footer />
