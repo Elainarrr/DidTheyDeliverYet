@@ -6,8 +6,7 @@ export default function DemoAdminPage() {
     <main className="min-h-screen bg-white flex flex-col">
       <Header title="Admin 📝" backHref="/demo" backLabel="← Demo" />
 
-      {/* Demo notice */}
-      <div className="bg-sky px-6 py-3 text-center">
+      <div className="bg-yellow px-6 py-3 text-center">
         <p className="text-xs font-medium text-gray-600">
           This is a read-only demo — buttons are disabled
         </p>
@@ -24,38 +23,31 @@ export default function DemoAdminPage() {
             disabled
             className="w-1/2 border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-900 bg-gray-50 cursor-not-allowed"
           >
-            <option>Pending</option>
+            <option>Delivered</option>
           </select>
-          <button
-            disabled
-            className="bg-lavender text-white rounded-full px-6 py-2 text-sm font-medium opacity-40 cursor-not-allowed"
-          >
-            Save status
-          </button>
-        </section>
-
-        <hr className="border-gray-100" />
-
-        {/* Post Update */}
-        <section className="flex flex-col gap-3 items-start">
-          <h2 className="text-xs font-semibold tracking-widest uppercase text-black opacity-50">
-            Post an update
-          </h2>
-          <textarea
-            disabled
-            placeholder="What's happening?"
-            rows={3}
-            className="w-full border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-400 resize-none bg-gray-50 cursor-not-allowed"
-          />
-          <div className="flex items-center gap-3">
-            <label className="text-sm text-gray-400">Status color</label>
-            <div className="w-8 h-6 rounded" style={{ background: '#FFF9C4', opacity: 0.4 }} />
+          <div className="flex flex-col gap-2">
+            <p className="text-xs text-gray-400">Color for "Yes!"</p>
+            <div className="flex gap-3">
+              {[
+                { label: 'Lavender', value: '#B7A3E3' },
+                { label: 'Pink', value: '#F9A8C9' },
+                { label: 'Blue', value: '#60A5FA' },
+              ].map((color) => (
+                <div key={color.value} className="flex flex-col items-center gap-1">
+                  <div
+                    className="w-8 h-8 rounded-full opacity-50"
+                    style={{ background: color.value }}
+                  />
+                  <span className="text-xs text-gray-400">{color.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
           <button
             disabled
             className="bg-lavender text-white rounded-full px-6 py-2 text-sm font-medium opacity-40 cursor-not-allowed"
           >
-            Post update
+            Save status
           </button>
         </section>
 
