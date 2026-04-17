@@ -27,8 +27,12 @@ export async function proxy(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Protect all /[slug]/admin routes
-  if (request.nextUrl.pathname.match(/\/[^/]+\/admin/) && !user) {
+  // Protect all /[slug]/admin routes but not /demo/admin
+  if (
+    request.nextUrl.pathname.match(/\/[^/]+\/admin/) &&
+    !request.nextUrl.pathname.startsWith('/demo') &&
+    !user
+  ) {
     const loginUrl = request.nextUrl.clone();
     loginUrl.pathname = '/login';
     loginUrl.searchParams.set('redirectTo', request.nextUrl.pathname);
