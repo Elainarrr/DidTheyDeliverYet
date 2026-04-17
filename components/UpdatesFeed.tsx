@@ -6,6 +6,7 @@ import { Site, Update } from '@/lib/types';
 import UpdateCard from '@/components/UpdateCard';
 import Header from '@/components/Header';
 import Link from 'next/link';
+import EmojiPicker from '@/components/EmojiPicker';
 
 type Props = {
   site: Site;
@@ -211,13 +212,21 @@ export default function UpdatesFeed({ site, updates: initialUpdates, isAdmin }: 
               <p className="text-xs text-gray-400">Just now</p>
             </div>
 
-            <textarea
-              value={updateText}
-              onChange={(e) => setUpdateText(e.target.value)}
-              placeholder="What's happening?"
-              rows={3}
-              className="w-full border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-300 resize-none"
-            />
+            {/* Text input with emoji picker */}
+            <div className="relative">
+              <textarea
+                value={updateText}
+                onChange={(e) => setUpdateText(e.target.value)}
+                placeholder="What's happening?"
+                rows={3}
+                className="w-full border border-gray-200 rounded-lg px-4 py-2 pr-10 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-300 resize-none"
+              />
+              <div className="absolute bottom-2 right-2">
+                <EmojiPicker
+                  onEmojiSelect={(emoji) => setUpdateText((prev) => prev + emoji)}
+                />
+              </div>
+            </div>
 
             {/* Color swatches */}
             <div className="flex flex-col gap-2">

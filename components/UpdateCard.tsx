@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Update } from '@/lib/types';
+import EmojiPicker from '@/components/EmojiPicker';
 
 type Props = {
   update: Update;
@@ -43,13 +44,20 @@ export default function UpdateCard({ update, isAdmin, onDelete, onEdit }: Props)
 
       {editing ? (
         <div className="flex flex-col gap-2">
-          <textarea
-            value={editText}
-            onChange={(e) => setEditText(e.target.value)}
-            rows={3}
-            className="w-full bg-white bg-opacity-60 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:ring-1 focus:ring-gray-300 resize-none"
-            autoFocus
-          />
+          <div className="relative">
+            <textarea
+              value={editText}
+              onChange={(e) => setEditText(e.target.value)}
+              rows={3}
+              className="w-full bg-white bg-opacity-60 border border-gray-200 rounded-lg px-3 py-2 pr-10 text-sm text-gray-800 focus:outline-none focus:ring-1 focus:ring-gray-300 resize-none"
+              autoFocus
+            />
+            <div className="absolute bottom-2 right-2">
+              <EmojiPicker
+                onEmojiSelect={(emoji) => setEditText((prev) => prev + emoji)}
+              />
+            </div>
+          </div>
           <div className="flex gap-2">
             <button
               onClick={handleSave}
