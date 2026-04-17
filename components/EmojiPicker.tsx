@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import data from '@emoji-mart/data';
-import Picker from '@emoji-mart/react';
+import EmojiPickerLib from 'emoji-picker-react';
 
 type Props = {
   onEmojiSelect: (emoji: string) => void;
@@ -35,16 +34,16 @@ export default function EmojiPicker({ onEmojiSelect }: Props) {
         🙂
       </button>
       {open && (
-        <div className="absolute bottom-8 right-0 z-50">
-          <Picker
-            data={data}
-            onEmojiSelect={(emoji: { native: string }) => {
-              onEmojiSelect(emoji.native);
+         <div className="absolute top-8 right-0 z-50">
+          <EmojiPickerLib
+            onEmojiClick={(emojiData) => {
+              onEmojiSelect(emojiData.emoji);
               setOpen(false);
             }}
-            theme="light"
-            previewPosition="none"
-            skinTonePosition="none"
+            skinTonesDisabled
+            searchDisabled={false}
+            height={350}
+            width={300}
           />
         </div>
       )}
