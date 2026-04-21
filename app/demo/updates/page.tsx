@@ -5,27 +5,35 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 
-const demoUpdates = [
+type DemoUpdate = {
+  id: string;
+  text: string;
+  photo: string | null;
+  status_color_hex: string;
+  time: string;
+};
+
+const demoUpdates: DemoUpdate[]= [
   {
     id: '1',
-    text: 'We have arrived at the hospital! Things are moving along — everyone is calm and excited.',
-    photo: true,
-    status_color_hex: '#E3F2FD',
+    text: 'She\'s here. 💛',
+    photo: 'https://lvbohndlhpszyftdldbd.supabase.co/storage/v1/object/public/site-assets/7f3a2c91-4e8b-4d5f-9b1a-e3c6f2d08a47-newborn.jpeg',
+    status_color_hex: '#FCE4EC',
     time: 'Today at 9:14 AM',
   },
   {
     id: '2',
-    text: "Bag is packed and we are headed in. See you on the other side!",
-    photo: true,
-    status_color_hex: '#FFF9C4',
-    time: 'Today at 7:02 AM',
+    text: 'The epidural is all set, Elaina even got a 30 minute nap in. Things seem to be accelerating nicely. 🤞',
+    photo: null,
+    status_color_hex: '#E3F2FD',
+    time: 'Today at 6:45 AM',
   },
   {
     id: '3',
-    text: "Due date is tomorrow — we are as ready as we'll ever be. 🙏",
-    photo: false,
-    status_color_hex: '#FCE4EC',
-    time: 'Yesterday at 8:45 PM',
+    text: 'We\'re headed to the hospital! 🧳',
+    photo: null,
+    status_color_hex: '#FFF9C4',
+    time: 'Today at 4:02 AM',
   },
 ];
 
@@ -83,14 +91,17 @@ export default function DemoUpdatesPage() {
               <p className="text-sm text-gray-400 italic">Your update will appear here...</p>
               <p className="text-xs text-gray-400">Just now</p>
             </div>
-
-            <textarea
-              disabled
-              placeholder="What's happening?"
-              rows={3}
-              className="w-full border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-400 resize-none bg-gray-50 cursor-not-allowed"
-            />
-
+            <div className="relative">
+                <textarea
+                disabled
+                placeholder="What's happening?"
+                rows={3}
+                className="w-full border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-400 resize-none bg-gray-50 cursor-not-allowed"
+                />
+                <div className="absolute bottom-2 right-2 text-gray-300 text-lg cursor-not-allowed opacity-30">
+                    🙂
+                </div>
+            </div>
             <div className="flex flex-col gap-2">
               <p className="text-xs text-gray-400">Tile color</p>
               <div className="flex flex-wrap gap-2">
@@ -136,12 +147,21 @@ export default function DemoUpdatesPage() {
             style={{ backgroundColor: update.status_color_hex }}
           >
             {update.photo && (
-              <div
-                className="w-full rounded-lg flex items-center justify-center text-sm text-gray-400"
-                style={{ height: '180px', background: update.status_color_hex + '99' }}
-              >
-                photo
-              </div>
+              typeof update.photo === 'string' ? (
+                <img
+                  src={update.photo}
+                  alt="Update photo"
+                  className="w-full rounded-lg"
+                  style={{ maxHeight: '400px', objectFit: 'contain' }}
+                />
+              ) : (
+                <div
+                  className="w-full rounded-lg flex items-center justify-center text-sm text-gray-400"
+                  style={{ height: '180px', background: update.status_color_hex + '99' }}
+                >
+                  photo
+                </div>
+              )
             )}
             <p className="text-sm text-gray-800 leading-relaxed">{update.text}</p>
             <div className="flex items-center justify-between">

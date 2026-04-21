@@ -147,16 +147,23 @@ export default function TourPage() {
               <span className="text-xs text-gray-400">← Back</span>
             </div>
             <div className="p-4 flex flex-col gap-3">
-              <div className="rounded-xl p-3" style={{ background: '#C2E2FA22' }}>
-                <div className="w-full h-24 rounded-lg bg-gray-100 flex items-center justify-center text-xs text-gray-400 mb-2">
-                  photo
-                </div>
-                <p className="text-sm text-gray-800">We've arrived! Things are moving fast.</p>
+              <div className="rounded-xl p-3" style={{ background: '#FCE4EC' }}>
+                <img
+                  src="https://lvbohndlhpszyftdldbd.supabase.co/storage/v1/object/public/site-assets/7f3a2c91-4e8b-4d5f-9b1a-e3c6f2d08a47-newborn.jpeg"
+                  alt="Update photo"
+                  className="w-full rounded-lg mb-2"
+                  style={{ maxHeight: '200px', objectFit: 'cover' }}
+                />
+                <p className="text-sm text-gray-800">She's here. 💛</p>
                 <p className="text-xs text-gray-400 mt-1">Today at 9:14 AM</p>
+              </div>
+              <div className="rounded-xl p-3" style={{ background: '#E3F2FD' }}>
+                <p className="text-sm text-gray-800">The epidural is all set, Elaina even got a 30 minute nap in. Things seem to be accelerating nicely. 🤞</p>
+                <p className="text-xs text-gray-400 mt-1">Today at 6:45 AM</p>
               </div>
               <div className="rounded-xl p-3" style={{ background: '#FFF1CB66' }}>
                 <p className="text-sm text-gray-800">Headed in — bag is packed, everyone is calm. Mostly.</p>
-                <p className="text-xs text-gray-400 mt-1">Today at 7:02 AM</p>
+                <p className="text-xs text-gray-400 mt-1">Yesterday at 4:02 AM</p>
               </div>
             </div>
           </div>
@@ -243,12 +250,17 @@ export default function TourPage() {
               <div className="w-full rounded-xl p-3 flex flex-col gap-2" style={{ background: '#FFF9C4' }}>
                 <p className="text-xs text-gray-400 italic">Your update will appear here...</p>
               </div>
-              <textarea
-                disabled
-                placeholder="What's happening?"
-                rows={2}
-                className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-400 resize-none cursor-not-allowed"
-              />
+              <div className="relative">
+                <textarea
+                  disabled
+                  placeholder="What's happening?"
+                  rows={2}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-400 resize-none cursor-not-allowed"
+                />
+                <div className="absolute bottom-2 right-2 text-gray-300 text-lg cursor-not-allowed opacity-30">
+                  🙂
+                </div>
+              </div>
               <div className="flex gap-1.5">
                 {['#FFF9C4', '#FCE4EC', '#FFF3E0', '#FFE0B2', '#E8F5E9', '#E3F2FD', '#F3E5F5', '#E0F7FA'].map((color) => (
                   <div
